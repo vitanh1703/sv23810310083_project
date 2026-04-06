@@ -15,7 +15,6 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    // YÊU CẦU: Slug Resource phải bắt đầu bằng MSSV
     protected static ?string $slug = 'sv23810310083-categories';
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
@@ -32,8 +31,7 @@ class CategoryResource extends Resource
                             ->label('Tên danh mục')
                             ->required()
                             ->maxLength(255)
-                            ->live(onBlur: true) // Lắng nghe sự kiện để tạo slug
-                            // YÊU CẦU: Tự động tạo slug khi nhập name
+                            ->live(onBlur: true) 
                             ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                         Forms\Components\TextInput::make('slug')
@@ -79,7 +77,6 @@ class CategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // YÊU CẦU: Hiển thị danh sách dạng bảng với bộ lọc is_visible
                 Tables\Filters\TernaryFilter::make('is_visible')
                     ->label('Trạng thái hiển thị')
                     ->placeholder('Tất cả')
